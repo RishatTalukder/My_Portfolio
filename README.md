@@ -184,6 +184,7 @@ Now, lets add the first `view` of our project.
 > `Views` are the functions that take a `web request` and return a `web response`.
 
 ## Adding a View
+
 ### The Easy Way
 
 Open the `views.py` file in your app directory and add the following code:
@@ -202,7 +203,7 @@ def home(request): # add
 
 In the function `home` we are returning a `response` with the string `Hello World` using the `HttpResponse` function we imported.
 
-Now, if you look at our terminal, you will see that it is running but if you go to the link we copied and paste it in our browser, you might not see the `Hello World` string. 
+Now, if you look at our terminal, you will see that it is running but if you go to the link we copied and paste it in our browser, you might not see the `Hello World` string.
 
 Because we haven't added the `url` of our `view` to our `project urls`.
 
@@ -221,13 +222,14 @@ urlpatterns = [
     path('', views.home, name='home'), # add
 ]
 ```
+
 > i imported the `views` from my `main` app.
 
 > `path` is a function that takes a `url path`, a `view` and a `name` and returns a `url path` with that `view` and `name`.
 
 > `name` is the string that we will use to call the `url path` in our `templates`.
 
-So, we just imported the view from our app and added it to our `root urls` with the `url path` `''` and the `name` `home` inside the `urlpatterns` list.  
+So, we just imported the view from our app and added it to our `root urls` with the `url path` `''` and the `name` `home` inside the `urlpatterns` list.
 
 now just restart the server and go to the link and you will see the `Hello World` string.
 
@@ -270,7 +272,7 @@ urlpatterns = [
 
 > `main.urls` is the `urls.py` file we created in our `main app` and `include` will add all the `url paths` of that file to our `root urls`.
 
-I removed the `views` import because we don't need it anymore. We are using `include` to add our `main app urls` to our `root urls`. 
+I removed the `views` import because we don't need it anymore. We are using `include` to add our `main app urls` to our `root urls`.
 
 So if you did all that accordingly, when you go to the link we will see the `Hello World` string.
 
@@ -283,6 +285,7 @@ urlpatterns = [
     path('home/', views.home, name='home'),
 ]
 ```
+
 > don't forget to add `"/"` after `home` in the `url path`. might cause some nasty errors
 
 > just changed the `url path` from `''` to `'home'`.
@@ -291,7 +294,7 @@ Now, when you reload your browser you will see an error. Because we changed the 
 
 > `Django` is smart enough to tell you what the error is. So, read the error carefully and you will know what to do.
 
-So, the error is saying that the `page not found`. Because we changed the page's url path. Before, it was `''` which refered the local host address(in my case it was `http://127.0.0.1:8000/`) 
+So, the error is saying that the `page not found`. Because we changed the page's url path. Before, it was `''` which refered the local host address(in my case it was `http://127.0.0.1:8000/`)
 
 But as we changed the `url path` to `home` it is now `http://127.0.0.1:8000/home/`.
 
@@ -303,3 +306,352 @@ for example: in my case it is `http://127.0.0.1:8000/home/`
 
 You will see the `Hello World` string.
 
+So, As we are done with how to add a `view` to our project and how to add `url paths` to our `root urls` we can move on to the next step. Before lets reset the url path to `''` in the `main app urls`.
+
+```python
+...
+urlpatterns = [
+    path('', views.home, name='home'),
+]
+```
+
+## Adding a Template
+
+### making the Home Page
+
+By adding a template i mean we will add a `html` file to our project and we will render that `html` file using in views.
+
+So, we will start by creating a folder named `templates` in our `main app` and inside that folder we will create another folder named `main` and inside that folder we will create a `html` file named `home.html`.
+
+So, the directory structure will look like this:
+
+```
+|-- main
+|    |-- migrations
+|    |    |-- __init__.py
+|
+|    |-- templates
+|    |    |-- main
+|    |    |    |-- home.html
+|
+|    |-- __init__.py
+|    |-- admin.py
+|    |-- apps.py
+|    |-- models.py
+|    |-- tests.py
+|    |-- views.py
+
+```
+
+> Make sure the name `templates` is correct. If you misspell it, it will not work.
+
+I know this is a little bit confusing but this is how django works. You will get used to it, as we go on.
+
+So now, lets add some code to our `home.html` file.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
+</html>
+```
+
+Now, lets render this `html` file in our `home` view. So, open the `views.py` file in your app directory and add the following code:
+
+```python
+def home(request):
+    #return HttpResponse("Hello World")
+    return render(request, 'main/home.html') # add
+```
+
+> `render` is a function that takes a `request` and a `template` name and returns a `response` with that `template`.
+
+> here we are returning a `response` with the `home.html` template by giving the `template` path `main/home.html`. I didn't add the `templates` folder name because django will automatically look for the `templates` folder in the `main app`.
+
+Now, if you reload your browser you will see the `Hello World` string. But this time it is coming from the `home.html` template.
+
+I think it was easy to add and render a `template` in our `view` and we will be doing this a lot in our project.
+
+I dont like the `Hello World` string. So, lets change it to something else.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Home page</h1>
+    <!-- changed to home -->
+  </body>
+</html>
+```
+
+So, as we made our first template view and render our first web page, we can now follow the same steps to add another `view` and `template`.
+
+### Adding the About Page
+
+So, lets add another `view` and `template` for our `about` page.
+
+In the `main/templates/main` folder create a `html` file named `about.html` and add the following code:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>About</h1>
+  </body>
+</html>
+```
+
+Now, lets add a `view` for our `about` page. So, open the `views.py` file in your app directory and add the following code:
+
+```python
+...
+def home(request):
+    return render(request, 'main/home.html')
+
+def about(request):
+    return render(request, 'main/about.html')
+```
+
+Now, lets add the `url path` for our `about` page. So, open the `main/urls.py` file in your app directory and add the following code:
+
+```python
+...
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('about/', views.about, name='about'), # add
+]
+```
+
+Now, if you reload your browser and go to the `localhost/about` page you will see the `About page`.
+
+SOOOOOOOO, The steps of adding a `view` and `template` are:
+
+1. Create a `html` file in the `templates` folder.
+2. Add a `view` in the `views.py` file.
+3. Add a `url path` in the `urls.py` file.
+
+We will follow these steps to render any page in our project.
+
+Now lets make it a little bit more interesting. Lets add a `navbar` to our project.
+
+## Adding a Navbar
+
+Adding a `navbar` is very easy. We just need to add some `html` code to our `Home.html` file. So, lets do that.
+
+```html
+<body>
+  <!-- navbar without css !-->
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Skills</a>
+    <a href="#">Projects</a>
+  </nav>
+  <h1>Home page</h1>
+</body>
+```
+
+Now, if you reload your browser you will see the `navbar` in the top of the page. But it is not looking good. But again there is a problem.
+
+**WE NEED TO ADD THE SAME `NAVBAR` TO EVERY PAGE OF OUR PROJECT.**
+
+Thats a very annoying thing to do. So, we need to find a way to add the `navbar` to every page of our project without adding it to every page.
+
+**There is a solution to this problem.**
+
+It is called **`TEMPLATE INHERITANCE`**.
+
+### Template Inheritance
+
+Template inheritance is a very useful feature of Django that allows you to build a base “skeleton” template that contains all the common elements of your site and defines blocks that child templates can override.
+
+So, here the `navbar` is the common element. So, we will make a html file that will contain the `navbar` and we will extend that file in every page of our project.
+
+#### Making the Base Template
+
+To do that lets make a directory name `templates` in our project directory and inside that folder we will make a file named `base.html` which will contain the navbar.
+
+The file structure will look like this:
+
+```
+path/to/the/project
+|-- main
+|-- portfolio(root directory)
+|-- templates
+|    |-- base.html
+```
+
+> the templates folder is in my `project directorty` or the `base directory`, Not in main or root directory.
+
+Now, lets add the `navbar` to our `base.html` file.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- navbar without styling-->
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Skills</a>
+      <a href="#">Projects</a>
+    </nav>
+  </body>
+</html>
+```
+
+> Here is the navbar we made before in home.html.
+
+> `href="#"` is used to tell the browser to stay on the same page. Because we don't have any other pages yet.
+
+Now, we need to tell django that this is the `base` template.
+
+#### Adding the Base Template
+
+So, open the `settings.py` file in your root directory and find the `TEMPLATES` variable and add the following code:
+
+```python
+...
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'], # add
+        'APP_DIRS': True,
+        ...
+    },
+]
+...
+```
+
+> `DIRS` is a list of directories where django will look for the templates.
+
+> restarting the server might be needed because we are editing directly in the `settings.py`.
+
+Now, lets extend the `base.html` file in our `home.html` file. So, open the `home.html` file in your `main/templates/main` directory, remove everything and add the following code:
+
+```html
+{% extends 'base.html' %}
+```
+
+> `{% extends 'base.html' %}` is used to tell django that this is the `base` template.
+
+Now, if you reload your browser you will see the `navbar` in the top of the page.
+
+But this time it is coming from the `base.html` template.
+
+we can add this to the `about.html` file.
+
+```html
+{% extends 'base.html' %}
+```
+
+now, if we go to the about page we will see the `navbar` in the top of the page.
+
+So, we have added the `navbar` to every page of our project.
+
+but if we add some more code inside the `home.html` file we will see the `navbar` in the top of the page but nothing else.
+
+lets, do some experiments.
+
+```html
+{% extends 'base.html' %}
+
+<h1>HOME PAGE</h1>
+<!-- add -->
+```
+
+Now if we reload our browser we will see the `navbar` in the top of the page but the `h1` tag is not there.
+
+#### why is this happening?
+
+Because we are extending the `base.html` template.
+When the extends tag is used django identifies the `base.html` as the parent template and the `home.html` as the child template.
+
+This means the `home.html` is a part of the `base.html` template.
+
+When i wrote the `h1` tag inside the `home.html` it was outside the `base.html` template.
+
+So, we need to add the `h1` tag inside the `base.html` template.
+
+**How can we do that?**
+
+lets modify the `base.html` file.
+
+```html
+...
+<body>
+  <!-- navbar without stling-->
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Skills</a>
+    <a href="#">Projects</a>
+  </nav>
+  <!-- add -->
+  <div>
+    {% block content %}
+    <!-- content goes here -->
+    {% endblock content %}
+  </div>
+</body>
+...
+```
+
+> `{% block content %}{% endblock content %}` is used to tell django that this is the `block` of the `base.html` template.
+
+> `block` is a django template tag that is used to define a `block` in a template.
+
+> `content` is the name of the `block`.
+
+> `block` is used to define a `block` in a template and `endblock` is used to end the `block`.
+
+I just added a `div` tag. Inside the `div` tag I added the `{% block content %}{% endblock content %}` tag.
+
+now, lets go to the `home.html` file and add the following code:
+
+```html
+{% extends 'base.html' %} 
+
+<!-- content of the home page -->
+{% block content %}
+<h1>HOME PAGE</h1>
+{% endblock content %}
+```
+
+> here in the `home.html` `{% block content %}{% endblock content %}` is used to tell django that this is the `block` of the `home.html` template.
+
+After adding the `block` in the `home.html` file, if we reload our browser we will see the `navbar` in the top of the page and the `h1` in the page.
+
+Now, lets do the same for the about page.
+
+```html
+{% extends 'base.html' %} 
+<!-- content of the about page -->
+{% block content %}
+<h1>About</h1>
+{% endblock content %}
+```
+
+with that we have added the `navbar` to every page of our project and we have learned how to use `template inheritance`.
