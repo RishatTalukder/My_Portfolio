@@ -6,7 +6,7 @@ This is my first Attemp to make a portfolio website. I've never Done something l
 
 # Backend Installation
 
-We can divid this into two parts:
+We can divide this into two parts:
 
 1. Bootstrap/Tailwind(FrontEnd)
 2. Django(BackEnd)
@@ -68,7 +68,67 @@ for example: `django-admin startproject portfolio .`
 
 > `django-admin` is Django’s command-line utility for administrative tasks.
 
+> `startproject` is a command that creates a folder with the name you gave and some files inside that folder, that are necessary for a django project.
+
 > Note: The `.` at the end of the command is important. It tells the startproject command to install Django in your current directory.
 
-After the command is executed you will see a folder named after the project name you gave. In my case it is `portfolio`.
+After the command is executed you will see a folder named after the project name you gave. In my case it is `portfolio` and a python file named `manage.py`.
 
+> `manage.py` is the most important file in a django project. Its used to do almost everything in a django project. SO, Don't edit or modify it ever.
+
+Now, lets get to now the files and folders inside the `portfolio` folder.
+
+Here, the portfolio folder is the `root` directory of our project. i'll call it `root` to avoid any confusion. It contains the following files and folders:
+
+```
+|-- root
+|   |-- __init__.py
+|   |-- asgi.py
+|   |-- settings.py
+|   |-- urls.py
+|   |-- wsgi.py
+```
+
+- `__init__.py` is an empty file that tells python that this directory is a python package.
+
+- `asgi.py` is the entry point for ASGI-compatible web servers to serve your project.
+
+- `settings.py` is the file where you will store all the configuration for your project.
+
+- `urls.py` is the file where you will store all the urls of your project.
+
+- `wsgi.py` is the entry point for WSGI-compatible web servers to serve your project.
+
+Now, lets run our project and see if everything is working fine. So, in the terminal, type:
+
+- `python manage.py runserver` (this will run your project in your local server)
+
+You see something like this:
+
+- in the terminal:
+<img src="images_and_stuff/django_server.PNG"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+- in the browser:
+<img src="images_and_stuff/django_starting_page.PNG"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+
+So if you see this, then your project is running fine. Now, lets stop the server by pressing `ctrl+c` in the terminal.
+
+We made our project and now we need to make an app for our project. So, lets do that.
+
+
+# Creating an App
+
+Before making an app we need to know what we want to add in our project by that app.
+
+As, this is a portfolio website, you need to add your `projects`, `skills`, `about` and `contact` information. So, we will make an app for each of them, Most importantly We need a Home page for our website. which is the First task to complete in any website. So,lets make an app for that.
+
+SO, open up your terminal and type:
+
+- `python manage.py startapp <app_name>` (replace `app_name` with your app name)
+
+> `startapp` is a command that creates a folder with the name you gave and some files inside that folder, that are necessary for an app.
