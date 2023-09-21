@@ -4,7 +4,7 @@ This is my first Attemp to make a portfolio website. I've never Done something l
 
 **so lets go!!!**
 
-# Backend Installation
+# Backend
 
 We can divide this into two parts:
 
@@ -632,7 +632,7 @@ I just added a `div` tag. Inside the `div` tag I added the `{% block content %}{
 now, lets go to the `home.html` file and add the following code:
 
 ```html
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 <!-- content of the home page -->
 {% block content %}
@@ -647,7 +647,7 @@ After adding the `block` in the `home.html` file, if we reload our browser we wi
 Now, lets do the same for the about page.
 
 ```html
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 <!-- content of the about page -->
 {% block content %}
 <h1>About</h1>
@@ -655,3 +655,346 @@ Now, lets do the same for the about page.
 ```
 
 with that we have added the `navbar` to every page of our project and we have learned how to use `template inheritance`.
+
+## Recap
+
+Lets recap what we did:
+
+- We made a `virtual environment` for our project.
+- We installed `Django` in our `virtual environment`.
+- We made a `Django` project.
+- We made a `Django` app.
+- We added a `view` to our project.
+- We added a `template` to our project.
+- We added a `url path` to our project.
+- We added a `navbar` to our project.
+- We learned about `template inheritance`.
+
+## Database
+
+As this is a portfolio website we need to add some information about our `projects`, `skills`, `about` and `contact` information. So, we need a database to store those information.
+
+In django we can use any database we want. But for this project we will be using `sqlite3` database. Because it is the default database of django and it is very easy to use.
+
+Djnago uses `ORM` to interact with the database. `ORM` stands for `Object Relational Mapper`. It is a technique that lets you query and manipulate data from a database using an object-oriented paradigm.
+
+So, lets start by adding a `model` to our project.
+
+### Adding a Model
+
+> A `model` is a class that represents a table in the database. Each attribute of the class represents a field in the table.
+
+So, lets add a `model` to our project. So, open the `models.py` file in your `main app` directory and you will see:
+
+```python
+from django.db import models
+
+# Create your models here.
+```
+
+> `from django.db import models` is used to import the `models` module from the `django.db` package. It is used to interact with the database.
+
+We will create our database tables in this file and it will be rendered in the database.
+
+But first we need to know what we want to add in our database.
+
+So, in my portfolio i want my youtube videos to be displayed and my github repositories to be displayed. So, we will add a `model` for each of them.
+
+So, Lets start with the `youtube model`. in the `main/models.py` file add the following code:
+
+```python
+from django.db import models
+
+# Create your models here.
+
+class Youtube(models.Model):  #add
+    url = models.CharField(max_length=200) #add
+    title = models.CharField(max_length=100) #add
+    description = models.TextField() #add
+    video_id = models.CharField(max_length=100) #add
+    thumbnail = models.ImageField(upload_to='images') #add
+    created_at = models.DateTimeField(auto_now_add=True) #add
+
+    def __str__(self):
+        return self.title
+
+```
+
+> `models.Model` is the base class of all the models. It is used to create a model.
+
+Lets break down what I did here:
+
+- I imported the `models` module from the `django.db` package.
+- I created a class named `Youtube` that inherits from the `models.Model` class.
+- I added some attributes to the class. Each attribute represents a field in the database table.
+
+  - `url` is a `CharField` that can store a string with a maximum length of 200 characters.
+  - `title` is a `CharField` that can store a string with a maximum length of 100 characters.
+  - `description` is a `TextField` that can store a string with a maximum length of 100 characters.
+  - `video_id` is a `CharField` that can store a string with a maximum length of 100 characters.
+  - `thumbnail` is a `ImageField` that can store an image. `upload_to` is used to tell django where to store the image. In this case it is the `images` folder.
+  - `created_at` is a `DateTimeField` that can store a date and time. `auto_now_add` is used to automatically add the current date and time when a new object is created.
+
+- I added a `__str__` method to the class. It is used to return a string representation of the object. In this case it will return the `title` of the object.
+
+If you did everything correctly, We can now migrate our database.
+
+### Migrating the Database
+
+> `Migrations` are Django’s way of propagating changes you make to your models (adding a field, deleting a model, etc.) into your database schema.
+
+So, lets migrate our database. So, open your terminal and type:
+
+- `python manage.py makemigrations` (this will create a migration file)
+
+> remember to activate your `virtual environment` before running the command.
+
+After running the command you might see this in yours terminal:
+<img src="images_and_stuff/pillow_error.PNG"
+       alt="Markdown Monster icon"
+       style="float: left; margin-right: 10px;" />
+
+If you get a error like this just copy the command from the last line of the terminal `python -m pip install Pillow` and paste it in the terminal then run it. It will install the `Pillow` package.
+
+> `Pillow` is a python package that is used to handle images in django. We will be using it to handle the `thumbnail` field. because it is a image field.
+
+Now, lets run the `makemigrations` command again. So, type:
+
+- `python manage.py makemigrations` again.
+
+Hopefully, there will be no errors this time and you will see something like this in your terminal:
+
+<img src="images_and_stuff/makemigration_successful.PNG"
+       alt="Markdown Monster icon"
+       style="float: left; margin-right: 10px;" />
+
+if you see this, then everything is working fine and we migrated our model to our database.
+
+Now, lets migrate our database. So, type:
+
+- `python manage.py migrate` (this will migrate our model to our database)
+
+![migration_in_the_terminal](images_and_stuff/migrate_successful.PNG)
+
+If your migration is successful you can add data to your database.
+
+### Adding Data to the Database
+
+There are some ways to add data to the database. We will be using the **Common Way**.
+
+but fist we need to add a `superuser` to our project. So, in the terminal type:
+
+- `python manage.py createsuperuser` (this will promt you to create a superuser)
+
+> `superuser` is a user that has all the permissions to do anything in the project.
+
+After running the command you will see something like this in your terminal:
+![createsuperuser](images_and_stuff/superuser_promt.PNG)
+
+- `Username` is the username of the superuser. You can give any username you want.
+- `Email address` is the email address of the superuser. You can give any email address you want.
+- `Password` is the password of the superuser. You can give any password you want.(you will not see the password when you type it and the password will be hidden)
+
+> fill all the fields carefully. You will need the username and password to login to the admin site.
+
+After you see the `Superuser created successfully.` message in your terminal, you can now add data to your database.
+
+#### The Common Way
+
+To add data to the database we need to login to the admin site. So, go to the `localhost/admin` page and login with the username and password you gave when you created the superuser.
+
+After you login you will see something like this:
+![admin_site](images_and_stuff/admin_panal.PNG)
+
+> explore the admin site. It is very easy to use.
+
+There is a problem, we can't see the `Youtube` model in the admin site. So, we need to register the `Youtube` model to the admin site.
+
+##### Registering the Model to the Admin Site
+
+To register the `Youtube` model to the admin site, open the `admin.py` file in your `main app` directory and add the following code:
+
+```python
+from django.contrib import admin
+from .models import Youtube # add
+
+# Register your models here.
+admin.site.register(Youtube) # add
+```
+
+> `from .models import Youtube` is used to import the `Youtube` model from the `models.py` file.
+
+> `admin.site.register(Youtube)` is used to register the `Youtube` model to the admin site.
+
+Now, if you reload the admin site you will see the `Youtube` model.
+
+> you might need to restart the server.
+
+Now, lets add some data to the database. So, click on the `Youtube` model and you will see all the fields of the model except the `created_at` field. because it is automatically added when a new object is created.
+
+I'll fill the fields with my youtube video information. You can aslo fill it with these informations.
+
+- `url` : `https://youtu.be/-Gi9KGRsFOc`
+- `title` : `Full Python Tutorial for Beginners`
+- `description` : `Learn full python tutorial from scratch for beginners. This course includes python basics, data types, control flow, functions, modules, OOP, GUI, Django, Flask, Tkinter and much more.`
+- `video_id` : `5qap5aO4i9A`
+- `thumbnail` :
+  ![thumbnail](images_and_stuff/maxresdefault.webp)
+
+After adding the data click on the `save` button and you will see the data in the database.
+
+After saving you will see there is a new folder named `images` in your project directory. It is created by the `upload_to` attribute of the `thumbnail` field. Inside the `Youtube` folder there is the thumbnail image we uploaded.
+
+And thats how we can add data to our database.
+
+Now, its time to fetch the data from the database and display it in our website.
+
+### Fetching Data from the Database
+
+To fetch data from the database we need to use `views`. We will fetch the data in our `home` view and display it in our `home.html` template.
+So, lets go to the `main/views.py` file and add the following code:
+
+```python
+from .models import Youtube # add
+...
+def home(request):
+    videos = Youtube.objects.all() # add
+    context = {'videos': videos} # add
+    return render(request, 'main/home.html', context) # add
+...
+```
+
+> `Youtube.objects.all()` is used to fetch all the objects from the `Youtube` model.
+
+> `context` is a dictionary that contains all the data that we want to pass to the template. the key of the dictionary is the name that we will use in the `home.html` and the value is the data itself.
+
+> we will pass the `context` as the third argument of the `render` function. that will give the `home.html` access to the data.
+
+So, we have fetched the data from the database and made a `context` dictionary that contains the data.
+Now, lets display it in our `home.html` template.
+
+So, open the `main/templates/main/home.html` file and add the following code:
+
+```django
+{% extends 'base.html' %}
+
+<!-- Page content goes here -->
+{% block content %}
+  <h1>HOME PAGE</h1>
+
+  <!-- displaying the videos -->
+  {% for video in videos %}
+    <div>
+      <a href="{{ video.url }}"><img src="{{ video.thumbnail.url }}" alt="{{ video.title }}" /></a>
+      <!-- title -->
+      <h2>{{ video.title }}</h2>
+      <!-- description -->
+      <p>{{ video.description }}</p>
+      <!-- thumbnail -->
+    </div>
+  {% endfor %}
+{% endblock %}
+```
+
+> `{% for video in videos %}{% endfor %}` is used to loop through the `videos` list. Everything inside the `for` loop will be repeated for every object in the `videos` list.
+
+> `{{ video.url }}` is used to display the `url` of the video.
+
+> `{{ video.thumbnail.url }}` is used to display the `url` of the thumbnail image. `url` is used to get the `url` or the `path` of the image. in this case the path is `images/maxresdefault.webp`.
+
+> `{{ video.title }}` is used to display the `title` of the video.
+
+> `{{ video.description }}` is used to display the `description` of the video.
+
+Now, if you reload the server and go to the `localhost/home` page you will see the video information we added in the database, including the title, description and the url.
+
+**But the thumbnail is not showing!!!!**
+
+This is because we haven't informed django that we are using images in our project. So, we need to add some code to our `settings.py` file.
+
+### ADDING MEDIA FILES
+
+> `Media files` are the files that are uploaded by the user. In our case it is the thumbnail image.
+
+We need to specify thhe media directory in our `settings.py` file. So, open the `settings.py` file in your root directory and add the following code:
+
+```python
+...
+MEDIA_ROOT = BASE_DIR / 'media' # add
+MEDIA_URL = '/media/' # add
+...
+```
+
+> `MEDIA_ROOT` is used to specify the media directory. In this case it is the `media` folder in the `base directory`.
+
+> `MEDIA_URL` is used to specify the `url` of the media directory. In this case it is `localhost/media/`.
+
+I added this in the end of the `settings.py` file. You can add it anywhere you want. But make sure you add it in the `settings.py` file.
+
+So, Lets break it down:
+
+- `MEDIA_ROOT` is the absolute path to the media directory. It is the path where the media files will be stored.
+
+- `MEDIA_URL` is the relative path to the media directory. It is the path that will be used to access the media files.
+
+So, We specified the where `django` will store the media files and the `url` of the media directory. Now lets fix the thumbnail problem.
+
+lets go to the admin panel and remove the thumbnail image and add it again. After adding the image click on the `save` button and you will see the image in the `media` folder.
+
+There will be a new folder named `media` in your project directory. Inside the `media` folder there will be a `image` folder. Inside the `image` folder there will be the thumbnail image we uploaded.
+
+Now lets reload the server and go to the `localhost/home` page and It didn't work 😥
+
+Im a very bad programmer. How can i make such a mistake.😞 I can't even make a simple portfolio website.😣
+
+**But wait a minute.**
+
+NOOOOOOO!!!! I'll not give up
+
+Lets try to fix this problem.
+
+> So, the problem is that django does not know serve the media files when we are in the development server. So, we need to add some code to our `urls.py` files to serve the media files.
+
+Now we know what the problem is. Lets fix it.
+
+So, open the `urls.py` file in your root directory and add the following code:
+
+```python
+...
+from django.conf import settings # add
+from django.conf.urls.static import static # add
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('main.urls')),
+] 
+
+if settings.DEBUG: # add
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # add
+```
+
+> `from django.conf import settings` is used to import the `settings` module from the `django.conf` package, this refers to the `settings.py` file.
+
+> `from django.conf.urls.static import static` is used to import the `static` function from the `django.conf.urls.static` module.
+
+> `urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)` is used to add the `media` url and the `media` root to the `urlpatterns` list.
+
+lets Break it down:
+
+- `settings.DEBUG` is used to check if the `DEBUG` mode is on or not. `DEBUG` mode is used to check if the project is in development mode or not. If it is in development mode then `DEBUG` mode is on.
+
+- Django does not serve the media files when the `DEBUG` mode is on. So, we need to add the `media` url and the `media` root to the `urlpatterns` list.
+
+- So, we added the `media` url and the `media` root to the `urlpatterns` list by using the `static` function.
+
+> Static function takes two arguments. The first argument is the `url` of the media directory and the second argument is the `absolute path` of the media directory and returns a `url path` with the `media` url and the `media` root.
+
+Now if you did all this correctly, you will see the thumbnail image in the `localhost/home` page when you reload the server.
+
+I see a huge improvement in my programming skills. I can't believe i fixed the problem.😁
+
+I also see a huge ass picture and if i click the picture it redirects me to the video in Yotube.
+
+Well, that was a win!! Still have a long way to go And i dont feel like doing these technical stuff anymore. Lets do some stylling...
+
+## Stylling the navbar

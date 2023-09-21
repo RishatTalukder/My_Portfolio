@@ -2,5 +2,17 @@
 
 <!-- Page content goes here -->
 {% block content %}
-<h1>HOME PAGE</h1>
-{% endblock content %}
+  <h1>HOME PAGE</h1>
+
+  <!-- displaying the videos -->
+  {% for video in videos %}
+    <div>
+      <a href="{{ video.url }}"><img src="{{ video.thumbnail.url }}" alt="{{ video.title }}" /></a>
+      <!-- title -->
+      <h2>{{ video.title }}</h2>
+      <!-- description -->
+      <p>{{ video.description }}</p>
+      <!-- thumbnail -->
+    </div>
+  {% endfor %}
+{% endblock %}
