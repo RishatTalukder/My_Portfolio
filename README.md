@@ -55,7 +55,7 @@ You can check your django version by typing, `python -m django --version`.
 
 Now, our environment is setup and we can start our project.
 
-# Djnago Project Setup
+## Djnago Project Setup
 
 Step 1: Make a directory for your project. I named my directory `My_Portfolio` and cut the `enviroment` folder and paste it in `My_Portfolio` directory.
 
@@ -646,7 +646,7 @@ After adding the `block` in the `home.html` file, if we reload our browser we wi
 
 Now, lets do the same for the about page.
 
-```html
+```django
 {% extends 'base.html' %}
 <!-- content of the about page -->
 {% block content %}
@@ -670,7 +670,7 @@ Lets recap what we did:
 - We added a `navbar` to our project.
 - We learned about `template inheritance`.
 
-## Database
+# Database
 
 As this is a portfolio website we need to add some information about our `projects`, `skills`, `about` and `contact` information. So, we need a database to store those information.
 
@@ -680,7 +680,7 @@ Djnago uses `ORM` to interact with the database. `ORM` stands for `Object Relati
 
 So, lets start by adding a `model` to our project.
 
-### Adding a Model
+## Adding a Model
 
 > A `model` is a class that represents a table in the database. Each attribute of the class represents a field in the table.
 
@@ -739,7 +739,7 @@ Lets break down what I did here:
 
 If you did everything correctly, We can now migrate our database.
 
-### Migrating the Database
+## Migrating the Database
 
 > `Migrations` are Django’s way of propagating changes you make to your models (adding a field, deleting a model, etc.) into your database schema.
 
@@ -778,7 +778,7 @@ Now, lets migrate our database. So, type:
 
 If your migration is successful you can add data to your database.
 
-### Adding Data to the Database
+## Adding Data to the Database
 
 There are some ways to add data to the database. We will be using the **Common Way**.
 
@@ -799,7 +799,7 @@ After running the command you will see something like this in your terminal:
 
 After you see the `Superuser created successfully.` message in your terminal, you can now add data to your database.
 
-#### The Common Way
+### The Common Way
 
 To add data to the database we need to login to the admin site. So, go to the `localhost/admin` page and login with the username and password you gave when you created the superuser.
 
@@ -810,7 +810,7 @@ After you login you will see something like this:
 
 There is a problem, we can't see the `Youtube` model in the admin site. So, we need to register the `Youtube` model to the admin site.
 
-##### Registering the Model to the Admin Site
+#### Registering the Model to the Admin Site
 
 To register the `Youtube` model to the admin site, open the `admin.py` file in your `main app` directory and add the following code:
 
@@ -849,7 +849,7 @@ And thats how we can add data to our database.
 
 Now, its time to fetch the data from the database and display it in our website.
 
-### Fetching Data from the Database
+## Fetching Data from the Database
 
 To fetch data from the database we need to use `views`. We will fetch the data in our `home` view and display it in our `home.html` template.
 So, lets go to the `main/views.py` file and add the following code:
@@ -898,6 +898,8 @@ So, open the `main/templates/main/home.html` file and add the following code:
 
 > `{% for video in videos %}{% endfor %}` is used to loop through the `videos` list. Everything inside the `for` loop will be repeated for every object in the `videos` list.
 
+> > `videos` is the name of the `videos` list we got from the `context` dictionary delivered by the `home` view.
+
 > `{{ video.url }}` is used to display the `url` of the video.
 
 > `{{ video.thumbnail.url }}` is used to display the `url` of the thumbnail image. `url` is used to get the `url` or the `path` of the image. in this case the path is `images/maxresdefault.webp`.
@@ -912,7 +914,7 @@ Now, if you reload the server and go to the `localhost/home` page you will see t
 
 This is because we haven't informed django that we are using images in our project. So, we need to add some code to our `settings.py` file.
 
-### ADDING MEDIA FILES
+## ADDING MEDIA FILES
 
 > `Media files` are the files that are uploaded by the user. In our case it is the thumbnail image.
 
@@ -967,7 +969,7 @@ from django.conf.urls.static import static # add
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
-] 
+]
 
 if settings.DEBUG: # add
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # add
@@ -995,6 +997,134 @@ I see a huge improvement in my programming skills. I can't believe i fixed the p
 
 I also see a huge ass picture and if i click the picture it redirects me to the video in Yotube.
 
-Well, that was a win!! Still have a long way to go And i dont feel like doing these technical stuff anymore. Lets do some stylling...
+Well, that was a win!!
 
-## Stylling the navbar
+Now, that we can add and `load` data from database. Lets make another table will have My `github repo` link.
+
+
+<!-- part 2 -->
+
+## Adding Github Repo Link
+
+Lets make another table to store the `github repo` link. So, open the `main/models.py` file in your `main app` directory and add the following code:
+
+```python
+...
+class Github(models.Model): # add
+    url = models.CharField(max_length=200)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+...
+```
+
+> You need to `migrate` a `model` every time you make a new one or change something in the model.
+
+So. lets migrate the `Github` model.
+
+In the terminal type:
+
+- `python manage.py makemigrations` and `python manage.py migrate`
+
+Register the model in the `admin.py` file.
+
+```python
+
+from .models import Github
+
+admin.site.register(Github)
+...
+```
+
+Lets go to the `localhost/admin` page to add the github repo link.
+
+So, click on the `Github` model and you will see all the fields of the model except the `created_at` field. Lets add new:
+
+- `url` : `https://github.com/RishatTalukder/My_Portfolio`
+- `title` : `My_Portfolio`
+- `description` : `This is my first Attemp ttomake a portfolio website`
+
+After adding the data click on the `save` button and you will see the data in the database.
+
+So, Now we can add this to the `home.html` template, after proccess this in the `views.py` file.
+
+Go to the `main/views.py` file and add the following code:
+
+```python
+...
+def home(request):
+    videos = Youtube.objects.all()
+    repos = Github.objects.all() # add
+    context = {
+        'videos': videos,
+        'repos': repos #add
+    }
+    return render(request, 'main/home.html', context)
+...
+```
+
+> `Github.objects.all()` is used to fetch all the objects from the `Github` model.
+
+> all the objects from the `Github` model are stored in the `repos` variable.
+
+So, in the home view we fetched the `videos` and the `repos` from the database and passed them to the `context` dictionary.
+
+Lets make some modifications in the `home.html` template.
+
+```django
+{% extends 'base.html' %}
+
+<!-- Page content goes here -->
+{% block content %}
+  <h1>HOME PAGE</h1>
+
+  <div> <!-- videos section-->
+    {% for video in videos %}
+      <div> 
+        <a href="{{ video.url }}"><img src="{{ video.thumbnail.url }}" alt="{{ video.title }}" /></a>
+        <!-- title -->
+        <h2>{{ video.title }}</h2>
+        <!-- description -->
+        <p>{{ video.description }}</p>
+        <!-- thumbnail -->
+      </div>
+    {% endfor %}
+  </div>
+  <div> <!-- repos section-->
+    {% for repo in repos %}
+      <div>
+        <a href="{{ repo.url }}"><h2>{{ repo.title }}</h2></a> <!-- link of the repository -->
+        <p>{{ repo.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+```
+
+> `for repo in repos` is used to loop through the `repos` list. Everything inside the `for` loop will be repeated for every object in the `repos` list.
+
+> `for video in videos` is used to loop through the `videos` list. Everything inside the `for` loop will be repeated for every object in the `videos` list.
+
+We added a new section to the `home.html` template. `Repos Section`
+
+In that section we display the `repos` list, where we display the `title`, `description` and the `url` of the repository and when we click on the `title` it will redirect us to the `url` of the repository.
+
+Now, lets reload the server and go to the `localhost/home` page and you will see the `Repos Section` in the `home.html` template.
+
+We will make some other pages but im bored doing this stuff right now. Lets style the `home.html` template.
+
+# Frontend 
+
+We have two pages. 
+1. `home.html`
+2. `about.html`
+
+Both pages have the the navbar and The navbar is located in the `base.html` template.
+
+Lets style our `Base.html` template.
+
+## Styling the Navbar
+

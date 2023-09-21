@@ -1,6 +1,7 @@
 from django.contrib import admin
-from . import models
-
+from .models import Youtube
+from .models import Github
 # Register your models here.
 
-admin.site.register(models.Youtube)
+admin.site.register(Youtube)
+admin.site.register(Github)

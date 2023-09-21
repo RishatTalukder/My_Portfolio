@@ -4,15 +4,24 @@
 {% block content %}
   <h1>HOME PAGE</h1>
 
-  <!-- displaying the videos -->
-  {% for video in videos %}
-    <div>
-      <a href="{{ video.url }}"><img src="{{ video.thumbnail.url }}" alt="{{ video.title }}" /></a>
-      <!-- title -->
-      <h2>{{ video.title }}</h2>
-      <!-- description -->
-      <p>{{ video.description }}</p>
-      <!-- thumbnail -->
-    </div>
-  {% endfor %}
+  <div>
+    {% for video in videos %}
+      <div>
+        <a href="{{ video.url }}"><img src="{{ video.thumbnail.url }}" alt="{{ video.title }}" /></a>
+        <!-- title -->
+        <h2>{{ video.title }}</h2>
+        <!-- description -->
+        <p>{{ video.description }}</p>
+        <!-- thumbnail -->
+      </div>
+    {% endfor %}
+  </div>
+  <div>
+    {% for repo in repos %}
+      <div>
+        <a href="{{ repo.url }}"><h2>{{ repo.title }}</h2></a>
+        <p>{{ repo.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
