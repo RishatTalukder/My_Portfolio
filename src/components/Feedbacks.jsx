@@ -31,7 +31,7 @@ const FeedbackCard = ({
       <div className="mt-7 flex justify-between items-center gap-1">
         <div className="flex-1 flex flex-col">
           <p className="text-white-100 text-[14x] font-medium">
-            <span className="flex items-center">
+            <span className="">
               @
               <span className="text-white-100 text-[14px] font-semibold">
                 {name}, &nbsp;

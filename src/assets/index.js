@@ -7,6 +7,10 @@ import github from "./github.png";
 import menu from "./menu.svg";
 import close from "./close.svg";
 
+import easy from "./easy.png";
+import lafalafi from "./lafalafi.png";
+import MLP from "./MLP.png";
+
 import css from "./tech/css.png";
 import docker from "./tech/docker.png";
 import figma from "./tech/figma.png";
@@ -25,13 +29,21 @@ import meta from "./company/meta.png";
 import shopify from "./company/shopify.png";
 import starbucks from "./company/starbucks.png";
 import tesla from "./company/tesla.png";
+import pythonista from "./company/pythonista.png";
 
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
 import tripguide from "./tripguide.png";
-
+import ml from "./company/ML.png";
+import django from "./company/django.png";
+import sklearn from "./company/sklearn.png";
+import tensor from "./company/tensor.png";
+import keras from "./company/keras.png";
+import post from "./company/post.png";
+import dipto from "./dipto.jpeg";
 export {
   logo,
+  dipto,
   backend,
   creator,
   mobile,
@@ -59,4 +71,14 @@ export {
   carrent,
   jobit,
   tripguide,
+  pythonista,
+  ml,
+  django,
+  sklearn,
+  tensor,
+  keras,
+  post,
+  easy,
+  lafalafi,
+  MLP,
 };
