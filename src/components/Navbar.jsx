@@ -29,7 +29,7 @@ const Navbar = () => {
             <span className="sm:block hidden">| ITVAYA</span>
           </p>
         </Link>
-        <ul className="list-none hidden sm:flex flex-row gap-10">
+        <ul className="list-none hidden sm:flex flex-row items-center gap-8">
           {navLinks.map((link) => (
             <li
               key={link.id}
@@ -41,6 +41,15 @@ const Navbar = () => {
               <a href={`#${link.id}`}>{link.title}</a>
             </li>
           ))}
+          <li>
+            <Link
+              to="/slop"
+              className="text-xs px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 border border-white/20 transition flex items-center gap-1.5 font-medium"
+            >
+              <span>📄</span>
+              <span>Slop Version</span>
+            </Link>
+          </li>
         </ul>
 
         <div className="sm:hidden flex flex-1 justify-end items-center">
@@ -54,9 +63,9 @@ const Navbar = () => {
           <div
             className={`${
               !toggle ? "hidden" : "flex"
-            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
+            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[160px] z-10 rounded-xl`}
           >
-            <ul className="list-none flex justify-end items-start flex-col gap-4">
+            <ul className="list-none flex justify-end items-start flex-col gap-4 w-full">
               {navLinks.map((link) => (
                 <li
                   key={link.id}
@@ -71,6 +80,16 @@ const Navbar = () => {
                   <a href={`#${link.id}`}>{link.title}</a>
                 </li>
               ))}
+              <li className="pt-2 border-t border-white/10 w-full">
+                <Link
+                  to="/slop"
+                  className="text-xs px-3 py-1.5 rounded-full bg-white/10 text-gray-200 border border-white/20 transition flex items-center justify-center gap-1.5 font-medium w-full"
+                  onClick={() => SetToggle(!toggle)}
+                >
+                  <span>📄</span>
+                  <span>Slop Version</span>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
