@@ -8,7 +8,7 @@ import {
   testimonials,
   projects,
 } from "../constants";
-import { logo, github } from "../assets";
+import { logo, github, handshake } from "../assets";
 
 const officeQuotes = [
   {
@@ -317,8 +317,46 @@ const SlopPage = () => {
               </div>
             </div>
 
-            {/* Right Column: Office Gag Card / Schrute Counter */}
-            <div className="lg:col-span-4 space-y-4">
+            {/* Right Column: Framed Handshake Photo & Dwight's Fact Board */}
+            <div className="lg:col-span-4 space-y-5">
+              {/* Framed Michael Scott Handshake Photo */}
+              <div className="rounded-2xl bg-[#090d16] border-2 border-amber-400/50 p-3 space-y-2.5 shadow-2xl relative group">
+                <div className="absolute -top-3 left-4 bg-amber-400 text-slate-950 font-mono text-[9px] font-black uppercase px-2.5 py-0.5 rounded shadow tracking-wider flex items-center gap-1 z-10">
+                  <span>📎</span>
+                  <span>OFFICIAL SCRANTON COMMENDATION</span>
+                </div>
+
+                <div
+                  className="relative overflow-hidden rounded-xl border border-slate-700 bg-slate-950 mt-1 cursor-pointer"
+                  onClick={triggerDundie}
+                  title="Click to claim Dundie Award!"
+                >
+                  <img
+                    src={handshake}
+                    alt="Michael Scott awkwardly shaking hands with Md. Rishat Talukder"
+                    className="w-full h-auto object-cover rounded-lg group-hover:scale-105 transition duration-500 shadow-inner"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
+                    <span className="text-[10px] font-mono text-amber-300 font-bold bg-black/70 px-2 py-0.5 rounded">
+                      🏆 Click to Claim Dundie
+                    </span>
+                  </div>
+                </div>
+
+                {/* Brass Plaque */}
+                <div className="bg-gradient-to-r from-amber-700/40 via-amber-500/20 to-amber-700/40 border border-amber-400/40 rounded-lg p-2.5 text-center font-mono">
+                  <p className="text-amber-300 font-extrabold text-[11px] uppercase tracking-wide">
+                    Md. Rishat Talukder & Michael Scott
+                  </p>
+                  <p className="text-slate-300 text-[9px] mt-0.5">
+                    Official Scranton Branch Handshake Ceremony
+                  </p>
+                  <p className="text-amber-400/90 text-[9px] italic mt-0.5">
+                    "You have no idea how high I can fly."
+                  </p>
+                </div>
+              </div>
+
               <div className="rounded-2xl bg-[#090d16] border border-slate-700/80 p-5 space-y-4 font-mono text-xs shadow-inner">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                   <span className="text-amber-400 font-bold flex items-center gap-1.5">

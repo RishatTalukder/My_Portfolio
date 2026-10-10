@@ -41,8 +41,10 @@ import tensor from "./company/tensor.png";
 import keras from "./company/keras.png";
 import post from "./company/post.png";
 import dipto from "./dipto.jpeg";
+import handshake from "./Michael Scott’s Awkward Office Handshake.png";
 export {
   logo,
+  handshake,
   dipto,
   backend,
   creator,
