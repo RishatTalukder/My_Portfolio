@@ -58,8 +58,8 @@ const ComputersCanvas = () => {
     // Cleanup function to remove the listener when the component unmounts
     return () => {
       mediaQuery.removeEventListener('change', handleMediaQueryChange);
-    }
-  });
+    };
+  }, []);
 
   return (
     <Canvas
