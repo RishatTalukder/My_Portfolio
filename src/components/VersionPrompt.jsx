@@ -87,23 +87,23 @@ const VersionPrompt = () => {
             <div className="h-full rounded-2xl bg-[#100d25]/90 backdrop-blur-md p-7 flex flex-col justify-between border border-white/5 group-hover:border-gray-500/50 transition-colors">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-white/10 text-gray-300 border border-white/10">
-                    Minimal / Standard
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                    ☕ The Office Edition
                   </span>
                   <span className="text-2xl group-hover:scale-125 transition-transform duration-300">
-                    📄
+                    📎
                   </span>
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-gray-300 transition-colors">
+                <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">
                   The Slop Version
                 </h2>
                 <p className="text-secondary text-sm leading-relaxed mb-6">
-                  A normal, lightweight placeholder page without 3D models or heavy scripts.
+                  Clean, fast, and themed after 'The Office' (Dunder Mifflin Scranton). Complete with Dundies, Dwight's fact board, and Michael Scott memos!
                 </p>
               </div>
 
-              <div className="flex items-center gap-2 text-sm font-semibold text-gray-300 group-hover:text-white transition-colors">
-                <span>Enter Slop Version</span>
+              <div className="flex items-center gap-2 text-sm font-semibold text-amber-300 group-hover:text-amber-200 transition-colors">
+                <span>Enter Dunder Mifflin</span>
                 <span className="group-hover:translate-x-1.5 transition-transform duration-300">
                   →
                 </span>
