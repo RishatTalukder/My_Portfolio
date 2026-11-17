@@ -26,19 +26,23 @@ const Navbar = () => {
           <img src={logo} alt="logo" className="w-9 h-9 object-contain" />
           <p className="text-white text-[18px] font-bold cursor-pointer flex">
             Md. Rishat Talukder &nbsp;
-            <span className="sm:block hidden">| ITVAYA</span>
+            <span className="sm:block hidden">|&nbsp; ITVAYA</span>
           </p>
         </Link>
-        <ul className="list-none hidden sm:flex flex-row gap-10">
+        <ul className="list-none hidden sm:flex flex-row items-center gap-2 rounded-xl border border-white/10 bg-[#050816]/40 px-3 py-2 backdrop-blur-md">
           {navLinks.map((link) => (
-            <li
-              key={link.id}
-              className={`${
-                active === link.title ? "text-white" : "text-primary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => SetActive(link.title)}
-            >
-              <a href={`#${link.id}`}>{link.title}</a>
+            <li key={link.id}>
+              <a
+                href={`#${link.id}`}
+                onClick={() => SetActive(link.title)}
+                className={`block rounded-lg px-4 py-2 text-[16px] font-medium transition-colors duration-200 ${
+                  active === link.title
+                    ? "bg-white/10 text-white"
+                    : "text-white hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                {link.title}
+              </a>
             </li>
           ))}
         </ul>
