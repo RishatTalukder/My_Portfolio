@@ -5,7 +5,7 @@ import { ComputersCanvas } from "./canvas";
 import myFace from '../assets/my_face.png' 
 const Hero = () => {
   return (
-    <section className="relative w-full h-screen mx-auto">
+    <section className="relative w-full h-screen min-h-[600px] overflow-hidden">
       <img
         src={myFace}
         alt="Rishat sitting outdoors"
