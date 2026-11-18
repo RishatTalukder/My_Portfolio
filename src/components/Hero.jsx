@@ -22,7 +22,7 @@ const Hero = () => {
           backgroundImage: `url(${myFace})`,
           backgroundSize: "100vw 100vh",
           backgroundPosition: "bottom",
-          filter: "blur(30px)",
+          filter: "blur(40px)",
           maskImage: "linear-gradient(to bottom, black, transparent)",
           WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
         }}
