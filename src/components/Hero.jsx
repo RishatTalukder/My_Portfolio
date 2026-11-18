@@ -2,10 +2,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import { styles } from "../styles";
 import { ComputersCanvas } from "./canvas";
-import myFace from '../assets/my_face.png' 
+import myFace from "../assets/my_face.png";
 const Hero = () => {
   return (
-    <section className="relative w-full h-screen min-h-[600px] overflow-hidden">
+    <section className="relative w-full h-screen min-h-[600px]">
       <img
         src={myFace}
         alt="Rishat sitting outdoors"
@@ -15,12 +15,24 @@ const Hero = () => {
       {/* Dark overlay - mostly on the left */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#050816]/90 via-[#050816]/55 to-transparent" />
 
+      {/* Blurred image transition below the hero */}
+      <div
+        className="absolute top-full left-0 w-full h-10 pointer-events-none z-20"
+        style={{
+          backgroundImage: `url(${myFace})`,
+          backgroundSize: "100vw 100vh",
+          backgroundPosition: "bottom",
+          filter: "blur(30px)",
+          maskImage: "linear-gradient(to bottom, black, transparent)",
+          WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
+        }}
+      />
+
       {/* Hero Content */}
       <div
         className={`${styles.paddingX} absolute inset-0 max-w-7xl mx-auto flex items-center`}
       >
         <div className="flex flex-row items-start gap-5 relative z-10">
-
           {/* Accent Line */}
           <div className="flex flex-col justify-center items-center mt-3">
             <div className="w-5 h-5 rounded-full bg-[#FF5F56]" />
@@ -37,8 +49,8 @@ const Hero = () => {
               I'm a Content Creator,
               <br className="sm:block hidden" />
               A Machine Learning Engineer
-              <br className="sm:block hidden" />
-              & I also know a little bit of Django.
+              <br className="sm:block hidden" />& I also know a little bit of
+              Django.
             </p>
           </div>
         </div>
